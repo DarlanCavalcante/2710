@@ -1,0 +1,32 @@
+# Arquivos do sistema macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Arquivos temporários
+*.log
+*.tmp
+*.temp
+
+# Diretórios de cache
+node_modules/
+.npm/
+.cache/
+
+# Arquivos do editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos de backup
+*.bak
+*.backup
+*~
+
+# Arquivos específicos do projeto que não devem ser versionados
+# (adicione aqui se necessário)

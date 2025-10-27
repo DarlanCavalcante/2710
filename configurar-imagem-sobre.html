@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar Imagem da Seção Sobre - Tech10</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .option {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .option:hover {
+            border-color: #2563eb;
+            background: #f8fafc;
+        }
+        .option.recommended {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+        .option h3 {
+            margin-top: 0;
+            color: #1e293b;
+        }
+        .option-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .option-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #2563eb;
+            color: white;
+            border-radius: 10px;
+        }
+        .recommended .option-icon {
+            background: #10b981;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .specs {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .specs h4 {
+            margin-top: 0;
+            color: #334155;
+        }
+        .current-status {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .preview-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .preview-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #1d4ed8;
+        }
+        .btn.success {
+            background: #10b981;
+        }
+        .btn.success:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ Configurar Imagem da Seção "Sobre"</h1>
+        
+        <div class="current-status">
+            <h3>📍 Status Atual</h3>
+            <p>Atualmente a seção "Sobre" está exibindo um <strong>placeholder personalizado</strong> com os ícones da Apple, ferramentas e Android, representando as especialidades da Tech10.</p>
+            <p><strong>Localização:</strong> Seção "Sobre a Tech10 Informática" → Lado direito</p>
+        </div>
+
+        <div class="option recommended">
+            <div class="option-header">
+                <div class="option-icon">📸</div>
+                <div>
+                    <h3>OPÇÃO 1: Foto da Loja/Fachada (RECOMENDADA)</h3>
+                    <p>Mostre a fachada da sua loja na Rua Dr. Bozano, 968 - Loja 8</p>
+                </div>
+            </div>
+            
+            <div class="specs">
+                <h4>✅ Vantagens:</h4>
+                <ul>
+                    <li>Clientes podem localizar fisicamente a loja</li>
+                    <li>Transmite credibilidade e transparência</li>
+                    <li>Mostra que é um negócio estabelecido</li>
+                    <li>Ajuda no marketing local (Santa Maria/RS)</li>
+                </ul>
+                
+                <h4>📐 Especificações:</h4>
+                <ul>
+                    <li><strong>Tamanho:</strong> 400x400px (quadrada) ou 400x300px</li>
+                    <li><strong>Formato:</strong> JPG ou PNG</li>
+                    <li><strong>Peso:</strong> Máximo 500KB</li>
+                    <li><strong>Qualidade:</strong> Boa iluminação, fachada limpa</li>
+                </ul>
+            </div>
+
+            <h4>🛠️ Como Implementar:</h4>
+            <ol>
+                <li>Tire uma foto da fachada da loja</li>
+                <li>Salve como: <code>imagem/tech10-loja.jpg</code></li>
+                <li>Substitua o código HTML:</li>
+            </ol>
+
+            <div class="code-block">
+&lt;div class="sobre-image"&gt;
+    &lt;img src="imagem/tech10-loja.jpg" alt="Fachada da Tech10 Informática"&gt;
+&lt;/div&gt;
+            </div>
+        </div>
+
+        <div class="option">
+            <div class="option-header">
+                <div class="option-icon">👥</div>
+                <div>
+                    <h3>OPÇÃO 2: Foto da Equipe/Você Trabalhando</h3>
+                    <p>Mostre você ou sua equipe reparando equipamentos Apple/Samsung</p>
+                </div>
+            </div>
+            
+            <div class="specs">
+                <h4>✅ Vantagens:</h4>
+                <ul>
+                    <li>Humaniza a marca</li>
+                    <li>Mostra expertise técnica</li>
+                    <li>Transmite profissionalismo</li>
+                    <li>Destaca as especialidades (Apple/Samsung)</li>
+                </ul>
+            </div>
+
+            <h4>💡 Ideias para a Foto:</h4>
+            <ul>
+                <li>Você reparando um iPhone</li>
+                <li>Mesa com ferramentas organizadas</li>
+                <li>Equipamentos Apple e Samsung visíveis</li>
+                <li>Ambiente de trabalho profissional</li>
+            </ul>
+        </div>
+
+        <div class="option">
+            <div class="option-header">
+                <div class="option-icon">🔧</div>
+                <div>
+                    <h3>OPÇÃO 3: Bancada de Trabalho/Ferramentas</h3>
+                    <p>Foto dos equipamentos e ferramentas especializadas</p>
+                </div>
+            </div>
+            
+            <div class="specs">
+                <h4>✅ Vantagens:</h4>
+                <ul>
+                    <li>Mostra profissionalismo técnico</li>
+                    <li>Destaca ferramentas especializadas</li>
+                    <li>Inspira confiança na qualidade do serviço</li>
+                    <li>Visual interessante e organizado</li>
+                </ul>
+            </div>
+
+            <h4>📱 Elementos para Incluir:</h4>
+            <ul>
+                <li>iPhones e Samsungs organizados</li>
+                <li>Ferramentas de precisão</li>
+                <li>Bancada limpa e organizada</li>
+                <li>Boa iluminação</li>
+            </ul>
+        </div>
+
+        <div class="option">
+            <div class="option-header">
+                <div class="option-icon">🎨</div>
+                <div>
+                    <h3>OPÇÃO 4: Usar Imagem Existente da Propaganda</h3>
+                    <p>Adaptar uma das imagens que você já tem na pasta</p>
+                </div>
+            </div>
+            
+            <p>Você tem várias imagens na pasta <code>imagem/propaganda loja/</code>. Posso adaptar uma delas:</p>
+            <ul>
+                <li><code>especializado-apple.jpeg</code> - Destaca especialidade Apple</li>
+                <li><code>tech10-melhorescolhadacidade.jpeg</code> - Marketing da empresa</li>
+                <li><code>tecnologia.jpeg</code> - Imagem genérica de tecnologia</li>
+            </ul>
+        </div>
+
+        <div class="option">
+            <div class="option-header">
+                <div class="option-icon">✨</div>
+                <div>
+                    <h3>OPÇÃO 5: Manter Placeholder Melhorado</h3>
+                    <p>Manter o design atual com ícones personalizados</p>
+                </div>
+            </div>
+            
+            <p>O placeholder atual já foi personalizado para a Tech10 com:</p>
+            <ul>
+                <li>Ícones Apple, Samsung e ferramentas</li>
+                <li>Nome da empresa</li>
+                <li>Texto "20 anos de experiência"</li>
+                <li>Design profissional com hover effects</li>
+            </ul>
+        </div>
+
+        <h2>🚀 Qual Opção Escolher?</h2>
+        <p><strong>Responda qual opção prefere e eu implemento imediatamente:</strong></p>
+        
+        <a href="#" class="btn success">📸 Opção 1 - Foto da Loja</a>
+        <a href="#" class="btn">👥 Opção 2 - Equipe/Trabalho</a>
+        <a href="#" class="btn">🔧 Opção 3 - Bancada</a>
+        <a href="#" class="btn">🎨 Opção 4 - Imagem Existente</a>
+        <a href="#" class="btn">✨ Opção 5 - Manter Placeholder</a>
+
+        <div style="margin-top: 30px; padding: 20px; background: #ecfdf5; border-radius: 8px; border: 1px solid #10b981;">
+            <h3>💬 Como Me Informar:</h3>
+            <p>Simplesmente me diga:</p>
+            <ul>
+                <li><strong>"Quero usar a opção 1"</strong> → E me informe se você tem a foto ou precisa tirar</li>
+                <li><strong>"Usar imagem existente"</strong> → E me diga qual das suas imagens usar</li>
+                <li><strong>"Manter como está"</strong> → E eu deixo o placeholder personalizado</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

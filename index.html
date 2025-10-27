@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Sua Loja de Informática</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="imagem/favico/favicon.ico" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-laptop-code"></i>
+                <span>TechStore</span>
+            </div>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="#produtos" class="nav-link">Produtos</a></li>
+                    <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                    <li><a href="#dicas" class="nav-link">Dicas</a></li>
+                    <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                    <li><a href="#contato" class="nav-link">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar produtos..." id="searchInput">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Video Background -->
+        <div class="hero-video">
+            <video autoplay muted loop playsinline>
+                <source src="imagem/propaganda loja/video-animacaoloja-fundo2.mp4" type="video/mp4">
+                Seu navegador não suporta o elemento de vídeo.
+            </video>
+        </div>
+        
+        <!-- Hero Overlay -->
+        <div class="hero-overlay"></div>
+        
+        <!-- Hero Content -->
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Tecnologia que Conecta Seu Mundo</h1>
+                <p class="hero-subtitle">Especialistas em Apple, Samsung e desenvolvimento Full Stack. Qualidade e confiança há 20 anos em Santa Maria/RS</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary">Explore Produtos</button>
+                    <button class="btn btn-secondary">Nossos Serviços</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-icons">
+                    <i class="fas fa-laptop"></i>
+                    <i class="fas fa-mobile-alt"></i>
+                    <i class="fas fa-desktop"></i>
+                    <i class="fas fa-headphones"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categorias -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Categorias em Destaque</h2>
+            <div class="categories-grid">
+                <div class="category-card" style="border: 2px solid #f59e0b;">
+                    <i class="fab fa-apple" style="color: #000;"></i>
+                    <h3>Especialista Apple</h3>
+                    <p>iPhone, iPad, MacBook e iMac</p>
+                    <small style="color: #f59e0b; font-weight: 600;">ESPECIALIDADE</small>
+                </div>
+                <div class="category-card" style="border: 2px solid #1f2937;">
+                    <i class="fab fa-android" style="color: #10b981;"></i>
+                    <h3>Samsung & Android</h3>
+                    <p>Galaxy e demais marcas Android</p>
+                    <small style="color: #1f2937; font-weight: 600;">ESPECIALIDADE</small>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Full Stack</h3>
+                    <p>Desenvolvimento profissional</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-laptop"></i>
+                    <h3>Notebooks</h3>
+                    <p>Venda e assistência técnica</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Smartphones</h3>
+                    <p>Reparo e manutenção</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Assistência</h3>
+                    <p>20 anos de experiência</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Produtos -->
+    <section id="produtos" class="produtos">
+        <div class="container">
+            <h2 class="section-title">Produtos em Destaque</h2>
+            
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="notebook">Notebooks</button>
+                <button class="filter-btn" data-filter="desktop">Desktops</button>
+                <button class="filter-btn" data-filter="smartphone">Smartphones</button>
+                <button class="filter-btn" data-filter="acessorio">Acessórios</button>
+            </div>
+            
+            <div class="produtos-grid" id="produtosGrid">
+                <!-- Produtos serão carregados via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos" class="servicos">
+        <div class="container">
+            <h2 class="section-title">Nossos Serviços</h2>
+            <div class="servicos-grid">
+                <div class="servico-card">
+                    <i class="fab fa-apple"></i>
+                    <h3>Especialista Apple</h3>
+                    <p>Assistência técnica especializada para toda linha Apple com 20 anos de experiência</p>
+                    <ul>
+                        <li>iPhone (todas as versões)</li>
+                        <li>iPad e iPad Pro</li>
+                        <li>MacBook e iMac</li>
+                        <li>Peças originais</li>
+                    </ul>
+                </div>
+                <div class="servico-card">
+                    <i class="fab fa-android"></i>
+                    <h3>Samsung & Android</h3>
+                    <p>Reparo especializado em Samsung Galaxy e demais marcas Android</p>
+                    <ul>
+                        <li>Samsung Galaxy (S, Note, A)</li>
+                        <li>Motorola, Xiaomi, LG</li>
+                        <li>Troca de tela e bateria</li>
+                        <li>Desbloqueio e software</li>
+                    </ul>
+                </div>
+                <div class="servico-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Desenvolvimento Full Stack</h3>
+                    <p>Desenvolvimento profissional de sistemas e aplicações web</p>
+                    <ul>
+                        <li>Sites e sistemas web</li>
+                        <li>E-commerce personalizado</li>
+                        <li>Aplicações mobile</li>
+                        <li>Consultoria em TI</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dicas do Especialista -->
+    <section id="dicas" class="dicas-especialista">
+        <div class="container">
+            <h2 class="section-title">Dicas do Especialista</h2>
+            <p class="section-subtitle">Aprenda com nossos especialistas como cuidar melhor dos seus equipamentos</p>
+            
+            <div class="dicas-grid" id="dicasGrid">
+                <!-- Dicas serão carregadas via JavaScript -->
+            </div>
+            
+            <div class="dicas-navigation">
+                <button class="dica-nav-btn" id="prevDica">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="dicas-dots" id="dicasDots">
+                    <!-- Dots serão criados dinamicamente -->
+                </div>
+                <button class="dica-nav-btn" id="nextDica">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre -->
+    <section id="sobre" class="sobre">
+        <div class="container">
+            <div class="sobre-content">
+                <div class="sobre-text">
+                    <h2 class="section-title">Sobre a <span data-info="nome">TechStore</span></h2>
+                    <p data-sobre="historia">Com mais de 10 anos de experiência no mercado de tecnologia, somos uma empresa especializada em oferecer as melhores soluções em informática para nossos clientes.</p>
+                    <p data-sobre="missao">Nossa missão é democratizar o acesso à tecnologia, oferecendo produtos de qualidade com preços justos e um atendimento personalizado que supera as expectativas.</p>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <h3 data-stat="anosExperiencia">10+</h3>
+                            <p>Anos de Experiência</p>
+                        </div>
+                        <div class="stat">
+                            <h3 data-stat="clientesSatisfeitos">5000+</h3>
+                            <p>Clientes Satisfeitos</p>
+                        </div>
+                        <div class="stat">
+                            <h3 data-stat="produtosDisponiveis">1000+</h3>
+                            <p>Produtos Disponíveis</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="sobre-image">
+                    <div class="loja-gallery" id="lojaGallery">
+                        <div class="gallery-container">
+                            <div class="gallery-slide active">
+                                <img src="imagem/propaganda loja/foto-loja1.jpeg" alt="Tech10 Informática - Loja" loading="lazy">
+                                <div class="slide-caption">
+                                    <h4>Tech10 Informática</h4>
+                                    <p>Rua Dr. Bozano, 968 - Loja 8</p>
+                                </div>
+                            </div>
+                            <div class="gallery-slide">
+                                <img src="imagem/propaganda loja/foto-loja2.jpeg" alt="Tech10 Informática - Interior" loading="lazy">
+                                <div class="slide-caption">
+                                    <h4>20 Anos de Experiência</h4>
+                                    <p>Especialistas em Apple e Samsung</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-controls">
+                            <button class="gallery-btn prev-btn" onclick="changeSlide(-1)">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <div class="gallery-dots">
+                                <span class="dot active" onclick="currentSlide(1)"></span>
+                                <span class="dot" onclick="currentSlide(2)"></span>
+                            </div>
+                            <button class="gallery-btn next-btn" onclick="changeSlide(1)">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="contato">
+        <div class="container">
+            <h2 class="section-title">Entre em Contato</h2>
+            <div class="contato-content">
+                <div class="contato-info">
+                    <h3>Informações de Contato</h3>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Endereço</h4>
+                            <p data-info="endereco">Rua da Tecnologia, 123<br>Centro, Sua Cidade - SP</p>
+                            
+                            <div class="location-section">
+                                <div class="mini-map-container">
+                                    <iframe 
+                                        id="miniMap"
+                                        class="mini-map"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123!2d-53.8067!3d-29.6868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjnCsDQxJzEyLjUiUyA1M8KwNDgnMjQuMSJX!5e0!3m2!1spt-BR!2sbr!4v1234567890!5m2!1spt-BR!2sbr"
+                                        allowfullscreen="" 
+                                        loading="lazy" 
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                    </iframe>
+                                    <div class="map-overlay">
+                                        <div class="map-info">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span>Tech10 Informática</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <a href="#" class="maps-button" id="comoChegar" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-directions"></i>
+                                    Ver Rota Completa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Telefone</h4>
+                            <div class="contact-methods">
+                                <div class="phone-fixed">
+                                    <i class="fas fa-phone-alt"></i>
+                                    <span data-info="telefone">(11) 99999-9999</span>
+                                    <small>Fixo</small>
+                                </div>
+                                <div class="contact-divider">
+                                    <span>ou</span>
+                                </div>
+                                <div class="phone-whatsapp">
+                                    <a href="#" class="whatsapp-button" id="whatsappContato" target="_blank" rel="noopener noreferrer">
+                                        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+                                        </svg>
+                                        WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p data-info="email">contato@techstore.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Horário de Funcionamento</h4>
+                            <p data-info="horarios">Segunda a Sexta: 8h às 18h<br>Sábado: 9h às 17h</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contato-form" id="contatoForm">
+                    <h3>Envie uma Mensagem</h3>
+                    <div class="form-group">
+                        <input type="text" id="nome" placeholder="Seu Nome" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Seu Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="telefone" placeholder="Seu Telefone">
+                    </div>
+                    <div class="form-group">
+                        <textarea id="mensagem" placeholder="Sua Mensagem" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>TechStore</span>
+                    </div>
+                    <p data-info="descricao">Sua loja de confiança em tecnologia e informática.</p>
+                    <div class="social-links">
+                        <a href="#" data-social="facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" data-social="instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" data-social="twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" data-social="whatsapp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#produtos">Produtos</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#dicas">Dicas</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Categorias</h4>
+                    <ul>
+                        <li><a href="#">Notebooks</a></li>
+                        <li><a href="#">Desktops</a></li>
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Acessórios</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Atendimento</h4>
+                    <ul>
+                        <li data-info="horarios-semana">Segunda a Sexta: 8h às 18h</li>
+                        <li data-info="horarios-sabado">Sábado: 9h às 17h</li>
+                        <li data-info="horarios-domingo">Domingo: Fechado</li>
+                        <li>Suporte: <span data-info="telefone">(11) 99999-9999</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 <span data-info="nome">TechStore</span>. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Carrinho Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Carrinho de Compras</h3>
+                <span class="close" id="closeCart">&times;</span>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <!-- Itens do carrinho serão inseridos aqui -->
+            </div>
+            <div class="modal-footer">
+                <div class="cart-total" id="cartTotal">Total: R$ 0,00</div>
+                <button class="btn btn-primary" id="checkoutBtn">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="#" id="whatsappFloat" class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Fale conosco no WhatsApp">
+        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 712.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.787"/>
+        </svg>
+        <span class="whatsapp-text">Fale Conosco</span>
+    </a>
+
+    <!-- Botão Voltar ao Topo -->
+    <button id="backToTop" class="back-to-top" title="Voltar ao topo">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="js/empresa-config.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
