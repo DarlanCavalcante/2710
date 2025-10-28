@@ -701,12 +701,18 @@ body {
     width: 100%;
     height: 250px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-50);
 }
 
 .dica-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
+    background: var(--gray-50);
     transition: var(--transition);
 }
 
@@ -871,6 +877,8 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
     animation: fadeIn 0.3s ease;
+    overflow-y: auto;
+    backdrop-filter: blur(5px);
 }
 
 .dica-modal-content {
@@ -894,7 +902,9 @@ body {
 .dica-modal-header img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
+    background: var(--gray-50);
 }
 
 .dica-modal-close {
@@ -1923,18 +1933,32 @@ body {
     
     /* Dicas responsivo */
     .dicas-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.5rem;
     }
     
     .dicas-navigation {
         gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .dica-nav-btn {
         width: 40px;
         height: 40px;
         font-size: 1rem;
+    }
+    
+    .dicas-dots {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
     }
     
     .dica-modal-content {
@@ -1989,8 +2013,81 @@ body {
     
     .categories-grid,
     .produtos-grid,
-    .servicos-grid {
+    .servicos-grid,
+    .dicas-grid {
         grid-template-columns: 1fr;
+    }
+    
+    /* Dicas em mobile pequeno */
+    .dicas-grid {
+        gap: 1rem;
+    }
+    
+    .dica-card {
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    
+    .dica-image {
+        height: 200px;
+    }
+    
+    .dica-content {
+        padding: 1rem;
+    }
+    
+    .dica-title {
+        font-size: 1rem;
+        line-height: 1.3;
+        margin-bottom: 0.5rem;
+    }
+    
+    .dica-description {
+        font-size: 0.875rem;
+        line-height: 1.4;
+        margin-bottom: 0.75rem;
+    }
+    
+    .dica-tags {
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .dica-tag {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    .dica-footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+    
+    .dica-difficulty,
+    .dica-read-time {
+        font-size: 0.8rem;
+    }
+    
+    .dicas-navigation {
+        margin-top: 2rem;
+        gap: 0.5rem;
+    }
+    
+    .dica-nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+    
+    .dicas-dots {
+        gap: 0.4rem;
+        margin-top: 0.75rem;
+    }
+    
+    .dica-dot {
+        width: 10px;
+        height: 10px;
     }
     
     .footer-content {

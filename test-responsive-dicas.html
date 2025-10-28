@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - Dicas Responsivas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px 10px; 
+            background: #f5f5f9; 
+        }
+        .test-header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+        }
+        .screen-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: monospace;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .breakpoint-info {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .breakpoint-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .breakpoint-item {
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .mobile-small { background: #fef3c7; color: #92400e; }
+        .mobile { background: #dbeafe; color: #1e40af; }
+        .tablet { background: #d1fae5; color: #065f46; }
+        .desktop { background: #e0e7ff; color: #3730a3; }
+        .current-bp {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .dicas-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .resize-tip {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="screen-info" id="screenInfo">
+        Largura: <span id="screenWidth">0</span>px | 
+        Tipo: <span id="screenType">-</span> | 
+        Dicas: <span id="dicasCount">0</span>
+    </div>
+
+    <div class="test-header">
+        <h1>📱 Teste - Dicas Responsivas</h1>
+        <p>Redimensione a janela para ver as dicas se adaptarem automaticamente</p>
+    </div>
+
+    <div class="breakpoint-info">
+        <h3>📐 Breakpoints Configurados:</h3>
+        <div class="breakpoint-list">
+            <div class="breakpoint-item mobile-small" id="bp-mobile-small">
+                <div>📱 Mobile Pequeno</div>
+                <div>≤ 480px</div>
+                <div><strong>1 dica</strong></div>
+            </div>
+            <div class="breakpoint-item mobile" id="bp-mobile">
+                <div>📲 Mobile</div>
+                <div>481px - 768px</div>
+                <div><strong>2 dicas</strong></div>
+            </div>
+            <div class="breakpoint-item tablet" id="bp-tablet">
+                <div>📋 Tablet</div>
+                <div>769px - 1024px</div>
+                <div><strong>2 dicas</strong></div>
+            </div>
+            <div class="breakpoint-item desktop" id="bp-desktop">
+                <div>🖥️ Desktop</div>
+                <div>> 1024px</div>
+                <div><strong>3 dicas</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="resize-tip">
+        <i class="fas fa-info-circle" style="color: #0ea5e9; margin-right: 8px;"></i>
+        <strong>Como testar:</strong> Redimensione a janela do navegador ou use as ferramentas de desenvolvedor (F12 → ícone do celular) para simular diferentes tamanhos de tela.
+    </div>
+
+    <div class="dicas-container">
+        <section class="dicas-especialista" style="padding: 0;">
+            <div class="container" style="max-width: none; padding: 0;">
+                <h2 class="section-title">Dicas do Especialista</h2>
+                <p class="section-subtitle">Quantidade se adapta automaticamente ao tamanho da tela</p>
+                
+                <div class="dicas-grid" id="dicasGrid">
+                    <!-- Dicas serão carregadas via JavaScript -->
+                </div>
+                
+                <div class="dicas-navigation">
+                    <button class="dica-nav-btn" id="prevDica">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="dicas-dots" id="dicasDots">
+                        <!-- Dots serão criados dinamicamente -->
+                    </div>
+                    <button class="dica-nav-btn" id="nextDica">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Atualizar informações da tela
+        function updateScreenInfo() {
+            const width = window.innerWidth;
+            const screenWidth = document.getElementById('screenWidth');
+            const screenType = document.getElementById('screenType');
+            const dicasCount = document.getElementById('dicasCount');
+            
+            let currentType = '';
+            let dicas = 0;
+            
+            // Remover classes ativas
+            document.querySelectorAll('.breakpoint-item').forEach(item => {
+                item.classList.remove('current-bp');
+            });
+            
+            if (width <= 480) {
+                currentType = 'Mobile Pequeno';
+                dicas = 1;
+                document.getElementById('bp-mobile-small').classList.add('current-bp');
+            } else if (width <= 768) {
+                currentType = 'Mobile';
+                dicas = 2;
+                document.getElementById('bp-mobile').classList.add('current-bp');
+            } else if (width <= 1024) {
+                currentType = 'Tablet';
+                dicas = 2;
+                document.getElementById('bp-tablet').classList.add('current-bp');
+            } else {
+                currentType = 'Desktop';
+                dicas = 3;
+                document.getElementById('bp-desktop').classList.add('current-bp');
+            }
+            
+            screenWidth.textContent = width;
+            screenType.textContent = currentType;
+            dicasCount.textContent = dicas;
+        }
+        
+        // Atualizar informações iniciais
+        updateScreenInfo();
+        
+        // Escutar mudanças no resize
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(updateScreenInfo, 100);
+        });
+        
+        // Log das mudanças para debug
+        const originalRenderDicas = window.renderDicas;
+        if (originalRenderDicas) {
+            window.renderDicas = function() {
+                console.log('🔄 Renderizando dicas:', {
+                    screenSize: state.currentScreenSize,
+                    dicasPerPage: state.dicasPerPage,
+                    currentPage: state.currentDicaPage,
+                    totalDicas: state.dicas.length
+                });
+                return originalRenderDicas.apply(this, arguments);
+            };
+        }
+    </script>
+</body>
+</html>

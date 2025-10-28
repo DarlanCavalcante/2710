@@ -6,7 +6,8 @@ const state = {
     currentFilter: 'all',
     dicas: [],
     currentDicaPage: 0,
-    dicasPerPage: 3
+    dicasPerPage: 3,
+    currentScreenSize: 'desktop'
 };
 
 // Dados dos produtos (simulação de uma API)
@@ -214,6 +215,7 @@ function initializeApp() {
     state.filteredProducts = productsData;
     state.dicas = dicasData;
     
+    setupResponsiveDicas();
     setupEventListeners();
     renderProducts();
     renderDicas();
@@ -223,6 +225,64 @@ function initializeApp() {
     setupHeroVideo();
     initializeGallery();
     initializeBackToTop();
+}
+
+// Função para configurar dicas responsivas
+function setupResponsiveDicas() {
+    function updateDicasPerPage() {
+        const screenWidth = window.innerWidth;
+        let newDicasPerPage;
+        let newScreenSize;
+        
+        if (screenWidth <= 480) {
+            // Mobile pequeno - 1 dica
+            newDicasPerPage = 1;
+            newScreenSize = 'mobile-small';
+        } else if (screenWidth <= 768) {
+            // Mobile/Tablet - 2 dicas
+            newDicasPerPage = 2;
+            newScreenSize = 'mobile';
+        } else if (screenWidth <= 1024) {
+            // Tablet grande - 2 dicas
+            newDicasPerPage = 2;
+            newScreenSize = 'tablet';
+        } else if (screenWidth <= 1366) {
+            // Desktop pequeno - 3 dicas
+            newDicasPerPage = 3;
+            newScreenSize = 'desktop';
+        } else {
+            // Desktop grande - 3 dicas
+            newDicasPerPage = 3;
+            newScreenSize = 'desktop-large';
+        }
+        
+        // Só atualiza se mudou
+        if (newDicasPerPage !== state.dicasPerPage || newScreenSize !== state.currentScreenSize) {
+            state.dicasPerPage = newDicasPerPage;
+            state.currentScreenSize = newScreenSize;
+            
+            // Ajustar página atual para não ultrapassar os limites
+            const totalPages = Math.ceil(state.dicas.length / state.dicasPerPage);
+            if (state.currentDicaPage >= totalPages) {
+                state.currentDicaPage = Math.max(0, totalPages - 1);
+            }
+            
+            // Re-renderizar dicas se já foram carregadas
+            if (state.dicas.length > 0) {
+                renderDicas();
+            }
+        }
+    }
+    
+    // Executar na inicialização
+    updateDicasPerPage();
+    
+    // Escutar mudanças na tela
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateDicasPerPage, 250);
+    });
 }
 
 // Event Listeners
@@ -861,7 +921,13 @@ function goToDicaPage(page) {
     renderDicas();
 }
 
+// Variável para armazenar a posição do scroll
+let scrollPosition = 0;
+
 function openDicaModal(dica) {
+    // Salvar posição atual do scroll
+    scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
     // Criar modal se não existir
     let modal = document.getElementById('dicaModal');
     if (!modal) {
@@ -886,7 +952,29 @@ function openDicaModal(dica) {
     if (modalTags) modalTags.innerHTML = dica.tags.map(tag => `<span class="dica-tag">${tag}</span>`).join('');
     if (modalContent) modalContent.textContent = dica.content;
     
+    // Prevenir scroll do body quando modal está aberto
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = '100%';
+    
     modal.style.display = 'block';
+}
+
+function closeDicaModal() {
+    const modal = document.getElementById('dicaModal');
+    if (modal) {
+        modal.style.display = 'none';
+        
+        // Restaurar scroll do body
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        
+        // Restaurar posição do scroll
+        window.scrollTo(0, scrollPosition);
+    }
 }
 
 function createDicaModal() {
@@ -915,13 +1003,20 @@ function createDicaModal() {
     
     // Event listeners para fechar modal
     const closeBtn = modal.querySelector('.dica-modal-close');
-    closeBtn.onclick = () => modal.style.display = 'none';
+    closeBtn.onclick = () => closeDicaModal();
     
     modal.onclick = (e) => {
         if (e.target === modal) {
-            modal.style.display = 'none';
+            closeDicaModal();
         }
     };
+    
+    // Adicionar listener para tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            closeDicaModal();
+        }
+    });
     
     return modal;
 }
