@@ -1,0 +1,70 @@
+{
+  "name": "Tech10 Informática e Tecnologia",
+  "short_name": "Tech10",
+  "description": "Especialistas em tecnologia há mais de 20 anos em Santa Maria/RS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "categories": ["business", "technology", "shopping"],
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "imagem/favico/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "imagem/favico/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "imagem/favico/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Produtos",
+      "short_name": "Produtos",
+      "description": "Ver produtos em destaque",
+      "url": "/#produtos",
+      "icons": [{ "src": "imagem/favico/favicon.ico", "sizes": "32x32" }]
+    },
+    {
+      "name": "Serviços",
+      "short_name": "Serviços",
+      "description": "Nossos serviços técnicos",
+      "url": "/#servicos",
+      "icons": [{ "src": "imagem/favico/favicon.ico", "sizes": "32x32" }]
+    },
+    {
+      "name": "Contato",
+      "short_name": "Contato",
+      "description": "Entre em contato conosco",
+      "url": "/#contato",
+      "icons": [{ "src": "imagem/favico/favicon.ico", "sizes": "32x32" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "imagem/screenshots/desktop.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "platform": "wide",
+      "label": "Site da Tech10 - Desktop"
+    },
+    {
+      "src": "imagem/screenshots/mobile.jpg",
+      "sizes": "360x640",
+      "type": "image/jpeg",
+      "platform": "narrow",
+      "label": "Site da Tech10 - Mobile"
+    }
+  ]
+}

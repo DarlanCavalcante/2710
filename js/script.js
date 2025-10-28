@@ -1024,7 +1024,31 @@ function createDicaModal() {
 // Inicializar carrinho do localStorage ao carregar
 window.addEventListener('load', function() {
     loadCartFromStorage();
+    registerServiceWorker();
 });
+
+// Registrar Service Worker para PWA
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('✅ Tech10 PWA: Service Worker registrado:', registration.scope);
+                
+                // Verificar atualizações
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            showNotification('Nova versão disponível! Recarregue a página.', 'info');
+                        }
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('❌ Tech10 PWA: Erro ao registrar Service Worker:', error);
+            });
+    }
+}
 
 // Adicionar estilos CSS dinamicamente para animações
 const style = document.createElement('style');
