@@ -176,3 +176,14 @@ node_modules/
 
 # Arquivos específicos do projeto que não devem ser versionados
 # (adicione aqui se necessário)
+# QUICK FIX ADDITIONS - Security & Cleanup
+.env.backup
+quickfix-backup-*
+temp-backup-*
+*.tmp
+*.bak
+system-monitor-report.json
+security.log
+audit.log
+.DS_Store
+Thumbs.db
