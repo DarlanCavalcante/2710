@@ -19,7 +19,7 @@ router.get('/', requireAuth, async (req, res) => {
 
     const settings = await db.all(`
       SELECT * FROM settings 
-      ${whereClause}
+      \${whereClause}
       ORDER BY group_name, key
     `, params);
 
@@ -36,6 +36,30 @@ router.get('/', requireAuth, async (req, res) => {
 
   } catch (error) {
     console.error('Erro ao buscar configurações:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+});
+
+// Listar configurações públicas (SEM AUTENTICAÇÃO)
+router.get('/public', async (req, res) => {
+  try {
+    const publicKeys = [
+      'site_name', 'site_description', 'contact_email', 'contact_phone',
+      'contact_whatsapp', 'social_instagram', 'social_facebook', 'social_twitter',
+      'address', 'products_per_page'
+    ];
+    
+    const placeholders = publicKeys.map(() => '?').join(',');
+    
+    const settings = await db.all(`
+      SELECT key, value FROM settings 
+      WHERE key IN (${placeholders})
+    `, publicKeys);
+
+    res.json(settings);
+
+  } catch (error) {
+    console.error('Erro ao buscar configurações públicas:', error);
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
 });
@@ -183,7 +207,7 @@ router.put('/', [
     );
 
     res.json({ 
-      message: `${updatedSettings.length} configurações atualizadas com sucesso`,
+      message: `\${updatedSettings.length} configurações atualizadas com sucesso`,
       updated_count: updatedSettings.length
     });
 
@@ -309,7 +333,7 @@ router.post('/reset', requireAuth, async (req, res) => {
     }
 
     // Buscar configurações antes do reset
-    const settingsBeforeReset = await db.all(`SELECT * FROM settings ${whereClause}`, params);
+    const settingsBeforeReset = await db.all(`SELECT * FROM settings \${whereClause}`, params);
 
     // Configurações padrão
     const defaultSettings = {
@@ -344,7 +368,7 @@ router.post('/reset', requireAuth, async (req, res) => {
     );
 
     res.json({ 
-      message: `${resetCount} configurações resetadas para o padrão`,
+      message: `\${resetCount} configurações resetadas para o padrão`,
       reset_count: resetCount
     });
 

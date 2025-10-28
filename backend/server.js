@@ -41,11 +41,17 @@ const limiter = rateLimit({
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
-      imgSrc: ["'self'", "data:", "blob:"],
-      fontSrc: ["'self'", "https://cdnjs.cloudflare.com"],
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+      "script-src": [
+        "'self'", 
+        "https://cdnjs.cloudflare.com",
+        "'sha256-vqHlv6a466BBC1MfOA5ff7vLBqUMggY0ioIiEMlXNPM='",
+        "'sha256-ieoeWczDHkReVBsRBqaal5AFMlBtNjMzgwKvLqi/tSU='",
+        "'sha256-Bj/Lij6hasCNihf0rxi3yWizgojdGoK4sc7XSyGjIGw='"
+      ],
+      "style-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
+      "img-src": ["'self'", "data:", "blob:"],
+      "font-src": ["'self'", "https://cdnjs.cloudflare.com"],
     },
   },
 }));
@@ -57,7 +63,10 @@ app.use(limiter);
 // CORS
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:3001',
   'http://localhost:8000',
+  'http://127.0.0.1:5500',
+  'http://127.0.0.1:3001',
   process.env.SITE_URL,
   process.env.ADMIN_URL
 ].filter(Boolean);
@@ -94,6 +103,19 @@ app.use(session({
 
 // Servir arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Servir o site principal (frontend) - ANTES do admin
+app.use(express.static(path.join(__dirname, '..'), {
+  index: 'index.html',
+  // Ignorar rotas que começam com /admin ou /api
+  setHeaders: (res, path) => {
+    if (path.includes('/admin/') || path.includes('/api/')) {
+      return;
+    }
+  }
+}));
+
+// Servir o painel admin
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
 // Routes da API
@@ -105,7 +127,7 @@ app.use('/api/settings', settingsRoutes);
 
 // Rota para servir o painel admin
 app.get('/admin/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../admin/index.html'));
+  res.sendFile(path.join(__dirname, '../admin/dashboard.html'));
 });
 
 // Rota principal da API

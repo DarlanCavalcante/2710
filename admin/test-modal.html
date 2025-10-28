@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Modal</title>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste de Modal</h1>
+    
+    <button onclick="showModal()">Abrir Modal</button>
+    <button onclick="testConsole()">Teste Console</button>
+
+    <!-- Modal -->
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <h2>Modal de Teste</h2>
+            <p>Este modal está funcionando!</p>
+            <button onclick="closeModal()">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        function showModal() {
+            console.log('showModal chamada');
+            const modal = document.getElementById('testModal');
+            console.log('Modal element:', modal);
+            if (modal) {
+                modal.style.display = 'block';
+                console.log('Modal exibido');
+            } else {
+                console.error('Modal não encontrado');
+            }
+        }
+
+        function closeModal() {
+            console.log('closeModal chamada');
+            document.getElementById('testModal').style.display = 'none';
+        }
+
+        function testConsole() {
+            console.log('Teste de console funcionando!');
+            alert('Console teste - veja o console do navegador');
+        }
+
+        // Testar se o DOM está carregado
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM carregado - test-modal.html');
+        });
+    </script>
+</body>
+</html>
