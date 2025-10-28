@@ -6,6 +6,7 @@ const fs = require('fs');
 const { body, validationResult } = require('express-validator');
 const { requireAuth } = require('./auth');
 const db = require('../database');
+const cacheManager = require('../utils/cache');
 const router = express.Router();
 
 // Configurar upload de imagens
@@ -49,7 +50,17 @@ const generateSlug = (text) => {
 };
 
 // Listar produtos
-router.get('/', async (req, res) => {
+router.get('/', 
+  cacheManager.middleware({
+    ttl: 600, // 10 minutos
+    cacheType: 'products',
+    keyGenerator: (req) => {
+      const { page = 1, limit = 12, category, search, sort = 'created_at', order = 'DESC', active = '1' } = req.query;
+      return `products:list:${page}:${limit}:${category || 'all'}:${search || 'none'}:${sort}:${order}:${active}`;
+    },
+    skipCache: (req) => req.headers['x-no-cache'] === 'true'
+  }),
+  async (req, res) => {
   try {
     const { 
       page = 1, 
@@ -249,6 +260,9 @@ router.post('/', [
       [req.session.userId, 'create', 'products', result.id, JSON.stringify({ name, slug })]
     );
 
+    // Invalidar cache de produtos
+    cacheManager.invalidateProducts();
+
     res.status(201).json({
       message: 'Produto criado com sucesso',
       id: result.id,
@@ -356,6 +370,9 @@ router.put('/:id', [
       [req.session.userId, 'update', 'products', productId, JSON.stringify(existingProduct), JSON.stringify({ name, slug })]
     );
 
+    // Invalidar cache de produtos
+    cacheManager.invalidateProducts();
+
     res.json({ message: 'Produto atualizado com sucesso' });
 
   } catch (error) {
@@ -393,6 +410,9 @@ router.delete('/:id', requireAuth, async (req, res) => {
       'INSERT INTO activity_logs (user_id, action, table_name, record_id, old_values) VALUES (?, ?, ?, ?, ?)',
       [req.session.userId, 'delete', 'products', productId, JSON.stringify(product)]
     );
+
+    // Invalidar cache de produtos
+    cacheManager.invalidateProducts();
 
     res.json({ message: 'Produto deletado com sucesso' });
 

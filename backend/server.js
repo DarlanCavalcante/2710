@@ -23,6 +23,8 @@ const productsRoutes = require('./routes/products');
 const categoriesRoutes = require('./routes/categories');
 const dashboardRoutes = require('./routes/dashboard');
 const settingsRoutes = require('./routes/settings');
+const cacheManager = require('./utils/cache');
+const systemMonitor = require('./utils/system-monitor');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,6 +39,16 @@ const limiter = rateLimit({
   }
 });
 
+// Rate limiting mais permissivo para monitoramento
+const monitorLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 1000, // 1000 requisições por 15 minutos
+  message: {
+    error: 'Limite de requisições do monitoramento excedido.',
+    retryAfter: 15
+  }
+});
+
 // Middleware de segurança
 app.use(helmet({
   contentSecurityPolicy: {
@@ -45,9 +57,16 @@ app.use(helmet({
       "script-src": [
         "'self'", 
         "https://cdnjs.cloudflare.com",
+        "https://cdn.jsdelivr.net",
         "'sha256-vqHlv6a466BBC1MfOA5ff7vLBqUMggY0ioIiEMlXNPM='",
         "'sha256-ieoeWczDHkReVBsRBqaal5AFMlBtNjMzgwKvLqi/tSU='",
-        "'sha256-Bj/Lij6hasCNihf0rxi3yWizgojdGoK4sc7XSyGjIGw='"
+        "'sha256-Bj/Lij6hasCNihf0rxi3yWizgojdGoK4sc7XSyGjIGw='",
+        "'sha256-9I/rkfhyRLhW+LcAI5a9q9sGA54on1PsOUABPXjjsw0='"
+      ],
+      "script-src-attr": [
+        "'unsafe-hashes'",
+        "'sha256-Jw5NghBkRZFrm6K45vNtyPk754rmysyQHbrzcGEEwQw='",
+        "'sha256-bN4uy6irkMZtDkB2a4oHROBMg+Q+iZI/NJuqwZ6Qbi8='"
       ],
       "style-src": ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"],
       "img-src": ["'self'", "data:", "blob:"],
@@ -89,6 +108,9 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
+// Sistema de monitoramento
+app.use(systemMonitor.middleware());
+
 // Session
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -124,6 +146,38 @@ app.use('/api/products', productsRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/settings', settingsRoutes);
+
+// Rotas para monitoramento (com rate limiting específico)
+app.get('/api/monitor/stats', monitorLimiter, (req, res) => {
+  res.json(systemMonitor.getStats());
+});
+
+app.get('/api/monitor/cache', monitorLimiter, (req, res) => {
+  res.json(cacheManager.getStats());
+});
+
+// Rotas para alertas
+const alertManager = require('./utils/alert-manager');
+
+app.get('/api/monitor/alerts', monitorLimiter, (req, res) => {
+  const alerts = alertManager.getAlerts(req.query);
+  res.json(alerts);
+});
+
+app.get('/api/monitor/alerts/stats', monitorLimiter, (req, res) => {
+  res.json(alertManager.getStats());
+});
+
+app.post('/api/monitor/alerts/:id/acknowledge', monitorLimiter, (req, res) => {
+  const { id } = req.params;
+  const success = alertManager.acknowledgeAlert(id, req.session?.userId);
+  
+  if (success) {
+    res.json({ message: 'Alerta reconhecido com sucesso' });
+  } else {
+    res.status(404).json({ error: 'Alerta não encontrado' });
+  }
+});
 
 // Rota para servir o painel admin
 app.get('/admin/*', (req, res) => {
@@ -181,6 +235,16 @@ async function startServer() {
     await db.connect();
     console.log('✅ Banco de dados conectado');
     
+    // Inicializar sistema de monitoramento
+    systemMonitor.start();
+    console.log('✅ Sistema de monitoramento iniciado');
+    
+    // Configurar alertas de sistema
+    systemMonitor.onAlert((alert) => {
+      console.log(`🚨 ALERTA [${alert.severity.toUpperCase()}]: ${alert.message}`);
+      // Aqui você pode adicionar notificações por email, Slack, etc.
+    });
+
     // Inicializar servidor
     app.listen(PORT, () => {
       console.log(`
@@ -189,6 +253,8 @@ async function startServer() {
 📍 Servidor: http://localhost:${PORT}
 🔧 Admin: http://localhost:${PORT}/admin
 📊 API: http://localhost:${PORT}/api
+📈 Monitor: http://localhost:${PORT}/api/monitor/stats
+🗄️  Cache: http://localhost:${PORT}/api/monitor/cache
 🌟 Ambiente: ${process.env.NODE_ENV}
 ⏰ Iniciado em: ${new Date().toLocaleString('pt-BR')}
       `);

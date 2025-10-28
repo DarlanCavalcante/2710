@@ -225,6 +225,9 @@ function initializeApp() {
     setupHeroVideo();
     initializeGallery();
     initializeBackToTop();
+    
+    // Marcar como carregado para prevenir piscar
+    document.body.classList.add('loaded');
 }
 
 // Função para configurar dicas responsivas
@@ -778,37 +781,52 @@ function setupMobileMenu() {
 function setupHeroVideo() {
     const video = document.querySelector('.hero-video video');
     if (video) {
-        // Garantir que o vídeo seja reproduzido
+        // Configurações iniciais
+        video.volume = 0;
+        video.loop = true;
+        video.muted = true;
+        video.playsInline = true;
+        
+        // Prevenir piscar durante carregamento
+        video.style.opacity = '0';
+        video.style.transition = 'opacity 0.5s ease';
+        
+        // Garantir que o vídeo seja reproduzido após carregar
         video.addEventListener('loadeddata', function() {
+            video.style.opacity = '1';
             video.play().catch(function(error) {
                 console.log('Erro ao reproduzir vídeo:', error);
+                // Fallback: mostrar imagem estática se vídeo falhar
+                video.style.display = 'none';
             });
         });
         
-        // Pausar/reproduzir vídeo quando a seção não estiver visível (performance)
+        // Otimizar performance com Intersection Observer
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    video.play().catch(e => console.log('Erro ao reproduzir:', e));
+                    if (video.paused) {
+                        video.play().catch(e => console.log('Erro ao reproduzir:', e));
+                    }
                 } else {
-                    video.pause();
+                    if (!video.paused) {
+                        video.pause();
+                    }
                 }
             });
         }, { threshold: 0.1 });
         
-        observer.observe(document.querySelector('.hero'));
-        
-        // Controle de volume e loop
-        video.volume = 0;
-        video.loop = true;
-        video.muted = true;
+        const heroSection = document.querySelector('.hero');
+        if (heroSection) {
+            observer.observe(heroSection);
+        }
         
         // Fallback para dispositivos que não suportam autoplay
         setTimeout(() => {
-            if (video.paused) {
+            if (video.paused && video.style.opacity === '1') {
                 video.play().catch(e => console.log('Autoplay não suportado'));
             }
-        }, 1000);
+        }, 1500);
     }
 }
 
@@ -1147,10 +1165,10 @@ function initializeGallery() {
     
     if (!gallery) return;
     
-    // Auto-rotate gallery every 5 seconds
+    // Auto-rotate gallery every 8 seconds (menos agressivo)
     setInterval(() => {
         changeSlide(1);
-    }, 5000);
+    }, 8000);
     
     console.log('📸 Galeria da loja inicializada!');
 }

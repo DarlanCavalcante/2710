@@ -2,6 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { requireAuth } = require('./auth');
 const db = require('../database');
+const cacheManager = require('../utils/cache');
 const router = express.Router();
 
 // Função para gerar slug
@@ -15,7 +16,16 @@ const generateSlug = (text) => {
 };
 
 // Listar categorias
-router.get('/', async (req, res) => {
+router.get('/', 
+  cacheManager.middleware({
+    ttl: 900, // 15 minutos
+    cacheType: 'default',
+    keyGenerator: (req) => {
+      const { active = '1', parent = null, tree = false } = req.query;
+      return `categories:list:${active}:${parent || 'null'}:${tree}`;
+    }
+  }),
+  async (req, res) => {
   try {
     const { active = '1', parent = null, tree = false } = req.query;
 
@@ -173,6 +183,10 @@ router.post('/', [
       [req.session.userId, 'create', 'categories', result.id, JSON.stringify({ name, slug })]
     );
 
+    // Invalidar cache de categorias e produtos
+    cacheManager.invalidatePattern('categories');
+    cacheManager.invalidateProducts(); // Produtos podem ser afetados
+
     res.status(201).json({
       message: 'Categoria criada com sucesso',
       id: result.id,
@@ -265,6 +279,10 @@ router.put('/:id', [
       [req.session.userId, 'update', 'categories', categoryId, JSON.stringify(existingCategory), JSON.stringify({ name, slug })]
     );
 
+    // Invalidar cache de categorias e produtos
+    cacheManager.invalidatePattern('categories');
+    cacheManager.invalidateProducts(); // Produtos podem ser afetados
+
     res.json({ message: 'Categoria atualizada com sucesso' });
 
   } catch (error) {
@@ -341,6 +359,10 @@ router.delete('/:id', requireAuth, async (req, res) => {
       'INSERT INTO activity_logs (user_id, action, table_name, record_id, old_values) VALUES (?, ?, ?, ?, ?)',
       [req.session.userId, 'delete', 'categories', categoryId, JSON.stringify(category)]
     );
+
+    // Invalidar cache de categorias e produtos
+    cacheManager.invalidatePattern('categories');
+    cacheManager.invalidateProducts(); // Produtos podem ser afetados
 
     res.json({ message: 'Categoria deletada com sucesso' });
 

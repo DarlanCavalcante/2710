@@ -2,10 +2,21 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const { requireAuth } = require('./auth');
 const db = require('../database');
+const cacheManager = require('../utils/cache');
 const router = express.Router();
 
 // Listar todas as configurações
-router.get('/', requireAuth, async (req, res) => {
+router.get('/', 
+  requireAuth,
+  cacheManager.middleware({
+    ttl: 1800, // 30 minutos
+    cacheType: 'settings',
+    keyGenerator: (req) => {
+      const { group } = req.query;
+      return `settings:list:${group || 'all'}`;
+    }
+  }),
+  async (req, res) => {
   try {
     const { group } = req.query;
 
