@@ -1,0 +1,116 @@
+{
+  "timestamp": "2025-10-28T16:32:24.360Z",
+  "duration": 2276,
+  "summary": {
+    "totalChecks": 7,
+    "totalIssues": 4,
+    "criticalIssues": 0,
+    "highIssues": 0,
+    "mediumIssues": 4,
+    "lowIssues": 0
+  },
+  "checks": [
+    {
+      "name": "System Health",
+      "status": "ok",
+      "details": {
+        "filesystem": "accessible",
+        "memory": {
+          "used": "5MB",
+          "total": "6MB"
+        },
+        "uptime": "0s"
+      }
+    },
+    {
+      "name": "File Integrity",
+      "status": "warning",
+      "details": {
+        "missing": [],
+        "present": [
+          "index.html",
+          "backend/server.js",
+          "backend/package.json",
+          "backend/.env.example",
+          "css/styles.css",
+          "js/script.js",
+          "admin/dashboard.html"
+        ]
+      }
+    },
+    {
+      "name": "Security",
+      "status": "ok",
+      "details": {}
+    },
+    {
+      "name": "Performance",
+      "status": "warning",
+      "details": {
+        "cssSize": "40KB",
+        "jsSize": "39KB",
+        "totalImageSize": "67MB"
+      }
+    },
+    {
+      "name": "Dependencies",
+      "status": "warning",
+      "details": {
+        "audit": "no vulnerabilities",
+        "outdated": 11
+      }
+    },
+    {
+      "name": "Backend",
+      "status": "offline",
+      "details": {},
+      "error": ""
+    },
+    {
+      "name": "Database",
+      "status": "ok",
+      "details": {
+        "size": "84KB",
+        "lastModified": "2025-10-28T15:19:09.036Z"
+      }
+    }
+  ],
+  "issues": [
+    {
+      "severity": "medium",
+      "category": "Test Files",
+      "message": "Arquivos de teste encontrados: teste-dicas.html, teste-tech10.html, teste-video.html, test-dicas-fix.html",
+      "timestamp": "2025-10-28T16:32:22.091Z"
+    },
+    {
+      "severity": "medium",
+      "category": "Large Images",
+      "message": "Imagens grandes encontradas: conserto.png (14MB), Logo_mockup.jpg (7MB), conserto.png (14MB), manuteno.png (4MB), posts2.png (8MB), postssegurana.png (8MB), postssegurança.png (8MB)",
+      "timestamp": "2025-10-28T16:32:22.103Z"
+    },
+    {
+      "severity": "medium",
+      "category": "Outdated Dependencies",
+      "message": "11 dependências desatualizadas",
+      "timestamp": "2025-10-28T16:32:24.341Z"
+    },
+    {
+      "severity": "medium",
+      "category": "Backend Offline",
+      "message": "Servidor backend não está respondendo",
+      "timestamp": "2025-10-28T16:32:24.359Z"
+    }
+  ],
+  "environment": {
+    "nodeVersion": "v24.10.0",
+    "platform": "darwin",
+    "cwd": "/Users/darlan/Documents/2710-1",
+    "memoryUsage": {
+      "rss": 53166080,
+      "heapTotal": 7897088,
+      "heapUsed": 5822936,
+      "external": 2060709,
+      "arrayBuffers": 19137
+    }
+  }
+}
